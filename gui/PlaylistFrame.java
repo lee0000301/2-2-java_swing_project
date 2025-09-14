@@ -15,7 +15,8 @@ public class PlaylistFrame extends JFrame {
     private MusicApp app;
     private DefaultListModel<String> listModel;
     private JList<String> playlistList;
-    private JTextField titleField, artistField; // 필드 변수로 선언
+    private JTextField titleField, artistField; 
+    private JComboBox<String> categoryComboBox; 
 
     public PlaylistFrame(User user, MusicApp app) {
         this.user = user;
@@ -98,42 +99,42 @@ public class PlaylistFrame extends JFrame {
 
         if (!user.isAdmin()) {
             
-            // '재생목록 담기' 버튼 추가
-            JButton addToMyPlaylistBtn = new JButton("재생목록 담기");
-            addToMyPlaylistBtn.addActionListener(e -> {
-                String selectedSong = playlistList.getSelectedValue();
-                if (selectedSong != null) {
-                    String[] parts = selectedSong.split(" - ");
-                    if (parts.length >= 2) {
-                        String artist = parts[0].trim();
-                        String title = parts[1].trim();
-                        user.addSong(new Song(title, artist));
-                        JOptionPane.showMessageDialog(this, "'" + title + "'이(가) 내 재생목록에 추가되었습니다.");
-                        refreshPlaylist();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "먼저 노래를 선택하세요.");
-                }
-            });
-
-            // '재생 목록 삭제' 버튼 추가
-            JButton removeFromMyPlaylistBtn = new JButton("재생목록 삭제");
-            removeFromMyPlaylistBtn.addActionListener(e -> {
-                int idx = playlistList.getSelectedIndex();
-                if (idx != -1) {
-                    String selected = listModel.get(idx);
-                    String title = selected.split(" - ")[0].trim();
-                    user.removeSong(title);
+        // '재생목록 담기' 버튼 추가
+        JButton addToMyPlaylistBtn = new JButton("재생목록 담기");
+        addToMyPlaylistBtn.addActionListener(e -> {
+            String selectedSong = playlistList.getSelectedValue();
+            if (selectedSong != null) {
+                String[] parts = selectedSong.split(" - ");
+                if (parts.length >= 2) {
+                    String artist = parts[0].trim();
+                    String title = parts[1].trim();
+                    user.addSong(new Song(title, artist));
+                    JOptionPane.showMessageDialog(this, "'" + title + "'이(가) 내 재생목록에 추가되었습니다.");
                     refreshPlaylist();
-                } else {
-                    JOptionPane.showMessageDialog(this, "먼저 삭제할 노래를 선택하세요.");
                 }
-            });
-            
-            JPanel commonButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            commonButtonsPanel.add(addToMyPlaylistBtn);
-            commonButtonsPanel.add(removeFromMyPlaylistBtn);
-            controlPanel.add(commonButtonsPanel);
+            } else {
+                JOptionPane.showMessageDialog(this, "먼저 노래를 선택하세요.");
+            }
+        });
+
+        // '재생 목록 삭제' 버튼 추가
+        JButton removeFromMyPlaylistBtn = new JButton("재생목록 삭제");
+        removeFromMyPlaylistBtn.addActionListener(e -> {
+            int idx = playlistList.getSelectedIndex();
+            if (idx != -1) {
+                String selected = listModel.get(idx);
+                String title = selected.split(" - ")[0].trim();
+                user.removeSong(title);
+                refreshPlaylist();
+            } else {
+                JOptionPane.showMessageDialog(this, "먼저 삭제할 노래를 선택하세요.");
+            }
+        });
+        
+        JPanel commonButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        commonButtonsPanel.add(addToMyPlaylistBtn);
+        commonButtonsPanel.add(removeFromMyPlaylistBtn);
+        controlPanel.add(commonButtonsPanel);
 
         }
 
@@ -142,6 +143,13 @@ public class PlaylistFrame extends JFrame {
             JPanel songInputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             titleField = new JTextField(10);
             artistField = new JTextField(10);
+
+            // 카테고리 선택 콤보박스
+            String[] categories = {"TOP 100", "발라드", "댄스", "힙합", "POP"};
+            categoryComboBox = new JComboBox<>(categories);
+            
+            songInputPanel.add(new JLabel("카테고리:"));
+            songInputPanel.add(categoryComboBox);
             songInputPanel.add(new JLabel("제목:"));
             songInputPanel.add(titleField);
             songInputPanel.add(new JLabel("가수:"));

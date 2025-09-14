@@ -2,7 +2,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-// 사용자 계정 관리, 로그인 및 회원가입 처리 수행
+// 사용자 계정 관리, 로그인 및 회원가입 처리
 
 public class MusicApp {
     private List<User> users = new ArrayList<>();
