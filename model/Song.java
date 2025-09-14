@@ -6,8 +6,8 @@ public class Song {
     private String artist; // 가수 이름
     
     public Song(String title, String artist) {
-    this.title = title;
-    this.artist = artist;
+        this.title = title;
+        this.artist = artist;
     }
 
     public String getTitle() {

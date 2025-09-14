@@ -6,6 +6,8 @@ import java.awt.event.*;
 import model.MusicApp;
 import model.User;
 
+// 로그인, 회원가입 할 수 있는 GUI 창 
+
 public class LoginFrame extends JFrame {
     private MusicApp app;
     private JTextField usernameField;
@@ -19,6 +21,7 @@ public class LoginFrame extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
+
         panel.add(new JLabel("아이디:"));
         usernameField = new JTextField(15);
         panel.add(usernameField);
@@ -41,22 +44,16 @@ public class LoginFrame extends JFrame {
                 User user = app.getLoggedInUser();
                 JOptionPane.showMessageDialog(this, "로그인 성공!");
                 dispose();
-                new PlaylistFrame(user);
+                new PlaylistFrame(user, app);
             } else {
                 JOptionPane.showMessageDialog(this, "로그인 실패: 아이디 또는 비밀번호를 확인하세요.");
             }
         });
 
         signupBtn.addActionListener(e -> {
-            String username = usernameField.getText().trim();
-            String password = new String(passwordField.getPassword()).trim();
-            if (username.isEmpty() || password.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "아이디와 비밀번호를 모두 입력하세요.");
-                return;
-            }
-            app.signUp(username, password);
-            JOptionPane.showMessageDialog(this, "회원가입 완료! 이제 로그인하세요.");
+            new signupFrame(app);
         });
+            
 
         setVisible(true);
     }

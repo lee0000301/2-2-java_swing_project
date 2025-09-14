@@ -3,17 +3,22 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-//사용자 클래스
-
+// 사용자 클래스
 public class User {
     private String username;
     private String password;
+    private boolean isAdmin; // 관리자 여부
     private List<Song> playlist; // 사용자별 플레이리스트
 
-    public User(String username, String password) {
-    this.username = username;
-    this.password = password;
-    this.playlist = new ArrayList<>();
+    public User(String username, String password, boolean isAdmin) {
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.playlist = new ArrayList<>();
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
     public String getUsername() {
@@ -24,18 +29,17 @@ public class User {
         return this.password.equals(password);
     }
 
-    //플레이리스트 기능
-    public void addSong(String title, String artist) {
-        Song song = new Song(title, artist);
+    // 플레이리스트 기능
+    public void addSong(Song song) {
         playlist.add(song);
         System.out.println(song + "이(가) 플레이리스트에 추가되었습니다.");
     }
 
     public void removeSong(String title) {
-        for (Song song : playlist) {
-            if (song.getTitle().equalsIgnoreCase(title)) {
-                playlist.remove(song);
-                System.out.println(song + "이(가) 플레이리스트에서 삭제되었습니다.");
+        for (int i = 0; i < playlist.size(); i++) {
+            if (playlist.get(i).getTitle().equalsIgnoreCase(title)) {
+                System.out.println(playlist.get(i) + "이(가) 플레이리스트에서 삭제되었습니다.");
+                playlist.remove(i);
                 return;
             }
         }
@@ -56,5 +60,4 @@ public class User {
     public List<Song> getPlaylist() {
         return playlist;
     }
-
 }
