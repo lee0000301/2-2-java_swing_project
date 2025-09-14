@@ -1,4 +1,4 @@
-package model;
+package src.model;
 
 //노래 클래스: 제목 + 가수 정보 저장
 public class Song {

@@ -1,5 +1,6 @@
-import gui.LoginFrame;
-import model.MusicApp;
+package src;
+import src.gui.LoginFrame;
+import src.model.MusicApp;
 
 import javax.swing.*;
 import java.awt.*;

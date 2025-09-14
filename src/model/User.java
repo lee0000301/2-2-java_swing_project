@@ -1,21 +1,29 @@
-package model;
+package src.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 // 사용자 클래스
 public class User {
+    private String name;
+    private java.sql.Date birthdate;
+    private String phone;
     private String username;
     private String password;
     private boolean isAdmin; // 관리자 여부
     private List<Song> playlist; // 사용자별 플레이리스트
 
-    public User(String username, String password, boolean isAdmin) {
+    public User(String username, String password, String name, java.sql.Date birthdate, String phone, boolean isAdmin) {
         this.username = username;
         this.password = password;
-        this.isAdmin = isAdmin;
+        this.name = name;
+        this.birthdate = birthdate;
+        this.phone = phone;
+        this.isAdmin = false; 
         this.playlist = new ArrayList<>();
     }
+
 
     public boolean isAdmin() {
         return isAdmin;
@@ -55,6 +63,18 @@ public class User {
                 System.out.println((i + 1) + ". " + playlist.get(i));
             }
         }
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBirthdate(java.sql.Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public List<Song> getPlaylist() {

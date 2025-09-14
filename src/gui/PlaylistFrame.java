@@ -1,12 +1,15 @@
-package gui;
+package src.gui;
 
 import javax.swing.*;
+
+import src.model.MusicApp;
+import src.model.Song;
+import src.model.User;
+
 import java.awt.*;
 import java.awt.event.*;
-import model.User;
-import model.Song;
-import model.MusicApp;
 import java.util.List;
+import java.sql.*;
 
 // 로그인한 사용자를 위한 주요 음악 앱 GUI, 장르 목록, 사용자 재생목록 관리
 
@@ -48,7 +51,7 @@ public class PlaylistFrame extends JFrame {
                 if ("내 재생목록".equals(selectedGenre)) {
                     refreshPlaylist();
                 } else {
-                    List<String> songs = model.Search.getSongsByGenre(selectedGenre);
+                    List<String> songs = src.model.Search.getSongsByGenre(selectedGenre);
                     for (String song : songs) {
                         listModel.addElement(song);
                     }

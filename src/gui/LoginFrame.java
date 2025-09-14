@@ -1,10 +1,12 @@
-package gui;
+package src.gui;
 
 import javax.swing.*;
+
+import src.model.MusicApp;
+import src.model.User;
+
 import java.awt.*;
 import java.awt.event.*;
-import model.MusicApp;
-import model.User;
 
 // 로그인, 회원가입 할 수 있는 GUI 창 
 
