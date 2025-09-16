@@ -1,7 +1,11 @@
 package src.gui;
 
 import javax.swing.*;
+<<<<<<< HEAD
 import java.util.Map;
+=======
+
+>>>>>>> c6c6f13 (password delete)
 import src.model.MusicApp;
 import src.model.Song;
 import src.model.User;
@@ -9,14 +13,22 @@ import src.model.User;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+<<<<<<< HEAD
 // java.sql.*;
 
 // 로그인한 사용자를 위한 주요 음악 앱 GUI, 장르 목록, 사용자 재생목록 관리
+=======
+import java.sql.*;
+
+// 로그인한 사용자를 위한 주요 음악 앱 GUI, 장르 목록, 사용자 재생목록 관리
+
+>>>>>>> c6c6f13 (password delete)
 public class PlaylistFrame extends JFrame {
     private User user;
     private MusicApp app;
     private DefaultListModel<String> listModel;
     private JList<String> playlistList;
+<<<<<<< HEAD
     private JTextField titleField, artistField, searchField;
     private JComboBox<String> categoryComboBox;
     private JPanel searchPanel;
@@ -24,6 +36,10 @@ public class PlaylistFrame extends JFrame {
     private JRadioButton titleRadioButton, artistRadioButton;
     private ButtonGroup searchTypeGroup;
     private JButton createPlaylistButton;
+=======
+    private JTextField titleField, artistField; 
+    private JComboBox<String> categoryComboBox; 
+>>>>>>> c6c6f13 (password delete)
 
     public PlaylistFrame(User user, MusicApp app) {
         this.user = user;
@@ -39,8 +55,13 @@ public class PlaylistFrame extends JFrame {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
         add(titleLabel, BorderLayout.NORTH);
 
+<<<<<<< HEAD
         // 왼쪽 : 장르 선택 패널
         String[] genres = {"검색", "내 재생목록", "TOP 100", "발라드", "댄스", "힙합", "POP"};
+=======
+        // 왼쪽 : 장르 선택 패널 
+        String[] genres = {"내 재생목록", "TOP 100", "발라드", "댄스", "힙합", "POP"};
+>>>>>>> c6c6f13 (password delete)
         JList<String> genreList = new JList<>(genres);
         genreList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         genreList.setBorder(BorderFactory.createTitledBorder("장르 선택"));
@@ -51,6 +72,7 @@ public class PlaylistFrame extends JFrame {
             if (!e.getValueIsAdjusting()) {
                 String selectedGenre = genreList.getSelectedValue();
                 listModel.clear(); // 기존 목록 비우기
+<<<<<<< HEAD
 
                 if ("검색".equals(selectedGenre)) {
                     searchPanel.setVisible(true); // 검색 패널 보이기
@@ -65,6 +87,15 @@ public class PlaylistFrame extends JFrame {
                         for (String song : songs) {
                             listModel.addElement(song);
                         }
+=======
+                
+                if ("내 재생목록".equals(selectedGenre)) {
+                    refreshPlaylist();
+                } else {
+                    List<String> songs = src.model.Search.getSongsByGenre(selectedGenre);
+                    for (String song : songs) {
+                        listModel.addElement(song);
+>>>>>>> c6c6f13 (password delete)
                     }
                 }
             }
@@ -76,6 +107,7 @@ public class PlaylistFrame extends JFrame {
         // 오른쪽: 내 재생목록 패널
         JPanel playlistPanel = new JPanel(new BorderLayout());
 
+<<<<<<< HEAD
         searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         searchField = new JTextField(20);
         searchButton = new JButton("검색");
@@ -144,6 +176,10 @@ public class PlaylistFrame extends JFrame {
         listModel = new DefaultListModel<>();
         playlistList = new JList<>(listModel);
         playlistList.addMouseListener(new YoutubePlay(playlistList, listModel, this, genreList));
+=======
+        listModel = new DefaultListModel<>();
+        playlistList = new JList<>(listModel);
+>>>>>>> c6c6f13 (password delete)
         playlistList.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
         playlistList.setFixedCellHeight(40);
         playlistList.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -175,6 +211,7 @@ public class PlaylistFrame extends JFrame {
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
         controlPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+<<<<<<< HEAD
 
 
         if (!user.isAdmin()) {
@@ -185,10 +222,24 @@ public class PlaylistFrame extends JFrame {
                 String selectedSong = playlistList.getSelectedValue();
                 if (selectedSong != null && selectedSong.contains(" - ")) {
                     String[] parts = selectedSong.split(" - ");
+=======
+        
+
+        if (!user.isAdmin()) {
+            
+        // '재생목록 담기' 버튼 추가
+        JButton addToMyPlaylistBtn = new JButton("재생목록 담기");
+        addToMyPlaylistBtn.addActionListener(e -> {
+            String selectedSong = playlistList.getSelectedValue();
+            if (selectedSong != null) {
+                String[] parts = selectedSong.split(" - ");
+                if (parts.length >= 2) {
+>>>>>>> c6c6f13 (password delete)
                     String artist = parts[0].trim();
                     String title = parts[1].trim();
                     user.addSong(new Song(title, artist));
                     JOptionPane.showMessageDialog(this, "'" + title + "'이(가) 내 재생목록에 추가되었습니다.");
+<<<<<<< HEAD
                 } else {
                     JOptionPane.showMessageDialog(this, "먼저 노래를 선택하세요.");
                 }
@@ -215,6 +266,33 @@ public class PlaylistFrame extends JFrame {
             commonButtonsPanel.add(addToMyPlaylistBtn);
             commonButtonsPanel.add(removeFromMyPlaylistBtn);
             controlPanel.add(commonButtonsPanel);
+=======
+                    refreshPlaylist();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "먼저 노래를 선택하세요.");
+            }
+        });
+
+        // '재생 목록 삭제' 버튼 추가
+        JButton removeFromMyPlaylistBtn = new JButton("재생목록 삭제");
+        removeFromMyPlaylistBtn.addActionListener(e -> {
+            int idx = playlistList.getSelectedIndex();
+            if (idx != -1) {
+                String selected = listModel.get(idx);
+                String title = selected.split(" - ")[0].trim();
+                user.removeSong(title);
+                refreshPlaylist();
+            } else {
+                JOptionPane.showMessageDialog(this, "먼저 삭제할 노래를 선택하세요.");
+            }
+        });
+        
+        JPanel commonButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        commonButtonsPanel.add(addToMyPlaylistBtn);
+        commonButtonsPanel.add(removeFromMyPlaylistBtn);
+        controlPanel.add(commonButtonsPanel);
+>>>>>>> c6c6f13 (password delete)
 
         }
 
@@ -227,7 +305,11 @@ public class PlaylistFrame extends JFrame {
             // 카테고리 선택 콤보박스
             String[] categories = {"TOP 100", "발라드", "댄스", "힙합", "POP"};
             categoryComboBox = new JComboBox<>(categories);
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> c6c6f13 (password delete)
             songInputPanel.add(new JLabel("카테고리:"));
             songInputPanel.add(categoryComboBox);
             songInputPanel.add(new JLabel("제목:"));
@@ -264,6 +346,7 @@ public class PlaylistFrame extends JFrame {
                 int idx = playlistList.getSelectedIndex();
                 if (idx != -1) {
                     String selected = listModel.get(idx);
+<<<<<<< HEAD
                     if(selected.contains(" - ")) {
                         // [버그 수정] "가수 - 제목" 형식에서 제목은 parts[1] 입니다.
                         String title = selected.split(" - ")[1].trim();
@@ -274,6 +357,15 @@ public class PlaylistFrame extends JFrame {
             });
         }
 
+=======
+                    String title = selected.split(" - ")[0].trim();
+                    user.removeSong(title);
+                    refreshPlaylist();
+                }
+            });
+        }
+        
+>>>>>>> c6c6f13 (password delete)
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, genrePanel, playlistPanel);
         splitPane.setDividerLocation(200);
 
