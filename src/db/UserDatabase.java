@@ -7,7 +7,7 @@ public class UserDatabase {
     // DB 접속 정보
     private final String url = "jdbc:mysql://113.198.235.222:10001/JavaSwingDB";
     private final String user = "lee"; 
-    private final String password = "ddangsil2@";
+    private final String password = "여기에 비밀번호 입력";
 
     // 드라이버 로드
     public UserDatabase() {
