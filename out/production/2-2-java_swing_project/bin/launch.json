@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch MusicApp",
+            "request": "launch",
+            "mainClass": "gui.LoginFrame",
+            "projectName": "MusicAppProject",
+            "vmArgs": "--module-path ./lib/mysql-connector-java-8.1.0.jar --add-modules java.sql"
+        }
+    ]
+}
